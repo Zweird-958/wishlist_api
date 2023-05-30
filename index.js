@@ -23,5 +23,8 @@ app.use((req, res, next) => {
 
   next()
 })
+app.use(function (_, res) {
+  res.status(404).send({ error: "Not found" })
+})
 
 app.listen(config.port, () => console.log(`Listening on :${config.port}`))
