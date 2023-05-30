@@ -1,6 +1,5 @@
-import cors from "cors"
 import express from "express"
-import config from "./src/config.js"
+// import config from "./src/config.js";
 
 const app = express()
 
@@ -27,4 +26,4 @@ app.use(function (_, res) {
   res.status(404).send({ error: "Not found" })
 })
 
-app.listen(config.port, () => console.log(`Listening on :${config.port}`))
+app.listen(3000, () => console.log(`Listening on :3000`))
