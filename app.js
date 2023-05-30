@@ -1,6 +1,10 @@
 import express from "express"
 import cors from "cors"
 import config from "./src/config.js"
+import { PrismaClient } from "@prisma/client"
+import signRoutes from "./src/routes/signRoutes.js"
+
+const prisma = new PrismaClient()
 
 const app = express()
 
@@ -23,8 +27,13 @@ app.use((req, res, next) => {
 
   next()
 })
+
+signRoutes(app)
+
 app.use(function (_, res) {
   res.status(404).send({ error: "Not found" })
 })
 
 app.listen(config.port, () => console.log(`Listening on : ${config.port}`))
+
+export { prisma }
