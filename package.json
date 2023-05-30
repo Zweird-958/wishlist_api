@@ -6,7 +6,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "sync": "prisma db push --force-reset && prisma generate"
+    "sync": "prisma db push && prisma generate",
+    "sync-reset": "prisma db push --force-reset && prisma generate"
   },
   "author": "",
   "license": "ISC",
