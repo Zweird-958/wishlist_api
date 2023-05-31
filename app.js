@@ -23,6 +23,16 @@ app.use((req, res, next) => {
 
         return false
       },
+
+      notAuthorized: (wish, user) => {
+        if (wish.userId !== user.id) {
+          res.status(401).send({ error: "Not authorized" })
+
+          return true
+        }
+
+        return false
+      },
     },
   }
 

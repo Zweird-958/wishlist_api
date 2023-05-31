@@ -1,6 +1,7 @@
 import { prisma } from "../../app.js"
 import auth from "../middlewares/auth.js"
 import { Currency } from "@prisma/client"
+import fetchWish from "../middlewares/fetchWish.js"
 
 const wishRoutes = (app) => {
   app.post("/wish", auth, async (req, res) => {
@@ -24,7 +25,24 @@ const wishRoutes = (app) => {
 
       res.status(500).send({ error: "Something wrong." })
     }
-  })
+  }),
+    app.delete(`/wish/:wishId`, auth, fetchWish, async (req, res) => {
+      const { wish } = req
+
+      try {
+        await prisma.wish.delete({
+          where: {
+            id: wish.id,
+          },
+        })
+
+        res.send({ result: wish })
+      } catch (error) {
+        console.error(error)
+
+        res.status(500).send({ error: "Something wrong." })
+      }
+    })
 }
 
 export default wishRoutes
