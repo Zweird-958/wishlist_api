@@ -2,12 +2,20 @@ import jsonwebtoken from "jsonwebtoken"
 import config from "../config.js"
 import hashPassword from "../utils/hashPassword.js"
 import { prisma } from "../../app.js"
+import yup from "yup"
+
+const signUpSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(8).required(),
+})
 
 const signRoutes = (app) => {
   app.post("/sign-up", async (req, res) => {
     const { email, password } = req.body
 
     try {
+      await signUpSchema.validate({ email, password })
+
       const user = await prisma.user.create({
         data: {
           email,
