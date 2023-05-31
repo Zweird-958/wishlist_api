@@ -50,6 +50,24 @@ const wishRoutes = (app) => {
 
     res.send({ result: wish })
   })
+
+  app.get("/wish", auth, async (req, res) => {
+    const { user } = req
+
+    try {
+      const wishes = await prisma.wish.findMany({
+        where: {
+          userId: user.id,
+        },
+      })
+
+      res.send({ result: wishes })
+    } catch (error) {
+      console.error(error)
+
+      res.status(500).send({ error: "Something wrong." })
+    }
+  })
 }
 
 export default wishRoutes
