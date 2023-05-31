@@ -25,24 +25,31 @@ const wishRoutes = (app) => {
 
       res.status(500).send({ error: "Something wrong." })
     }
-  }),
-    app.delete(`/wish/:wishId`, auth, fetchWish, async (req, res) => {
-      const { wish } = req
+  })
 
-      try {
-        await prisma.wish.delete({
-          where: {
-            id: wish.id,
-          },
-        })
+  app.delete(`/wish/:wishId`, auth, fetchWish, async (req, res) => {
+    const { wish } = req
 
-        res.send({ result: wish })
-      } catch (error) {
-        console.error(error)
+    try {
+      await prisma.wish.delete({
+        where: {
+          id: wish.id,
+        },
+      })
 
-        res.status(500).send({ error: "Something wrong." })
-      }
-    })
+      res.send({ result: wish })
+    } catch (error) {
+      console.error(error)
+
+      res.status(500).send({ error: "Something wrong." })
+    }
+  })
+
+  app.get("/wish/:wishId", auth, fetchWish, async (req, res) => {
+    const { wish } = req
+
+    res.send({ result: wish })
+  })
 }
 
 export default wishRoutes
