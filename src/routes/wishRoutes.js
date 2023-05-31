@@ -2,17 +2,18 @@ import { prisma } from "../../app.js"
 import auth from "../middlewares/auth.js"
 import { Currency } from "@prisma/client"
 import fetchWish from "../middlewares/fetchWish.js"
+import upload from "../middlewares/upload.js"
 
 const wishRoutes = (app) => {
-  app.post("/wish", auth, async (req, res) => {
-    const { user, body } = req
-    const { name, image, price, currency } = body
+  app.post("/wish", auth, upload.single("/image"), async (req, res) => {
+    const { user, body, file } = req
+    const { name, price, currency } = body
 
     try {
       const wish = await prisma.wish.create({
         data: {
           name,
-          image,
+          image: file.filename,
           price,
           currency: Currency[currency],
           userId: user.id,
