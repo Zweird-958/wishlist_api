@@ -7,6 +7,7 @@ const wishRoutes = (app) => {
   app.post("/wish", auth, upload.single("image"), async (req, res) => {
     const { user, body, file } = req
     const { name, price, currency } = body
+    console.log(file)
 
     try {
       const wish = await prisma.wish.create({
