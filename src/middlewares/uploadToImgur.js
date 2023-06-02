@@ -1,4 +1,5 @@
 import config from "../config.js"
+import fetch, { Headers } from "node-fetch"
 
 const uploadToImgur = async (req, res, next) => {
   const image = req.file
