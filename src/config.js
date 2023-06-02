@@ -14,6 +14,7 @@ const config = {
       secret: process.env.SECURITY_JWT_SECRET,
     },
   },
+  client_id: process.env.IMGUR_CLIENT_ID,
 }
 
 export default config

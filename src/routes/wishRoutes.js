@@ -1,32 +1,40 @@
+import multer from "multer"
 import { prisma } from "../../app.js"
 import auth from "../middlewares/auth.js"
 import fetchWish from "../middlewares/fetchWish.js"
-import upload from "../middlewares/upload.js"
+import uploadToImgur from "../middlewares/uploadToImgur.js"
+
+const upload = multer()
 
 const wishRoutes = (app) => {
-  app.post("/wish", auth, upload.single("image"), async (req, res) => {
-    const { user, body, file } = req
-    const { name, price, currency } = body
-    console.log(file)
+  app.post(
+    "/wish",
+    auth,
+    upload.single("image"),
+    uploadToImgur,
+    async (req, res) => {
+      const { user, body, link } = req
+      const { name, price, currency } = body
 
-    try {
-      const wish = await prisma.wish.create({
-        data: {
-          name,
-          image: file.filename,
-          price: Number(price),
-          currency,
-          userId: user.id,
-        },
-      })
+      try {
+        const wish = await prisma.wish.create({
+          data: {
+            name,
+            image: link,
+            price: Number(price),
+            currency,
+            userId: user.id,
+          },
+        })
 
-      res.send({ result: wish })
-    } catch (error) {
-      console.log(error)
+        res.send({ result: wish })
+      } catch (error) {
+        console.log(error)
 
-      res.status(500).send({ error: "Something wrong." })
+        res.status(500).send({ error: "Something wrong." })
+      }
     }
-  })
+  )
 
   app.delete(`/wish/:wishId`, auth, fetchWish, async (req, res) => {
     const { wish } = req
