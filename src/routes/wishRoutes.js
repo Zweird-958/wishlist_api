@@ -37,6 +37,39 @@ const wishRoutes = (app) => {
     }
   )
 
+  app.patch(
+    "/wish/:wishId",
+    auth,
+    fetchWish,
+    uploadToImgur,
+    async (req, res) => {
+      const { wish, body, image } = req
+      const { name, price, currency, link, purchased } = body
+
+      try {
+        const updatedWish = await prisma.wish.update({
+          where: {
+            id: wish.id,
+          },
+          data: {
+            name: name || wish.name,
+            price: Number(price) || wish.price,
+            currency: currency || wish.currency,
+            link: link || wish.link,
+            purchased: purchased || wish.purchased,
+            image: image || wish.image,
+          },
+        })
+
+        res.send({ result: updatedWish })
+      } catch (error) {
+        console.error(error)
+
+        res.status(500).send({ error: "Something wrong." })
+      }
+    }
+  )
+
   app.delete(`/wish/:wishId`, auth, fetchWish, async (req, res) => {
     const { wish } = req
 
