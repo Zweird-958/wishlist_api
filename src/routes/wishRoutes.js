@@ -41,6 +41,7 @@ const wishRoutes = (app) => {
     "/wish/:wishId",
     auth,
     fetchWish,
+    upload.single("image"),
     uploadToImgur,
     async (req, res) => {
       const { wish, body, image } = req
@@ -56,7 +57,7 @@ const wishRoutes = (app) => {
             price: Number(price) || wish.price,
             currency: currency || wish.currency,
             link: link || wish.link,
-            purchased: purchased || wish.purchased,
+            purchased: purchased === undefined ? wish.purchased : purchased,
             image: image || wish.image,
           },
         })
