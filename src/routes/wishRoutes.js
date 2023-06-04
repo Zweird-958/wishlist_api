@@ -13,15 +13,16 @@ const wishRoutes = (app) => {
     upload.single("image"),
     uploadToImgur,
     async (req, res) => {
-      const { user, body, link } = req
-      const { name, price, currency } = body
+      const { user, body, image } = req
+      const { name, price, currency, link } = body
 
       try {
         const wish = await prisma.wish.create({
           data: {
             name,
-            image: link,
+            image,
             price: Number(price),
+            link,
             currency,
             userId: user.id,
           },

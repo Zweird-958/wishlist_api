@@ -29,7 +29,7 @@ const uploadToImgur = async (req, res, next) => {
       data: { link },
     } = await response.json()
 
-    req.link = link
+    req.image = link
     next()
   } catch (error) {
     console.log("error", error)
