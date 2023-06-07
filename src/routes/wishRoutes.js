@@ -103,6 +103,9 @@ const wishRoutes = (app) => {
         where: {
           userId: user.id,
         },
+        orderBy: {
+          createdAt: "asc",
+        },
       })
 
       res.send({ result: wishes })
