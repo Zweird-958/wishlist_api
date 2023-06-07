@@ -57,7 +57,7 @@ const wishRoutes = (app) => {
             price: Number(price) || wish.price,
             currency: currency || wish.currency,
             link: link || wish.link,
-            purchased: purchased === undefined ? wish.purchased : purchased,
+            purchased: purchased === "true",
             image: image || wish.image,
           },
         })
