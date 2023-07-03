@@ -1,11 +1,10 @@
-import express from "express"
-import cors from "cors"
-import config from "./src/config.js"
 import { PrismaClient } from "@prisma/client"
+import cors from "cors"
+import express from "express"
+import config from "./src/config.js"
+import currencyRoutes from "./src/routes/currencyRoutes.js"
 import signRoutes from "./src/routes/signRoutes.js"
 import wishRoutes from "./src/routes/wishRoutes.js"
-import currencyRoutes from "./src/routes/currencyRoutes.js"
-import sessionRoutes from "./src/routes/sessionRoutes.js"
 
 const prisma = new PrismaClient()
 
@@ -44,7 +43,6 @@ app.use((req, res, next) => {
 signRoutes(app)
 wishRoutes(app)
 currencyRoutes(app)
-sessionRoutes(app)
 
 app.use(function (_, res) {
   res.status(404).send({ error: "Not found" })
