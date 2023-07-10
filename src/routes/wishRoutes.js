@@ -3,6 +3,7 @@ import { prisma } from "../../app.js"
 import auth from "../middlewares/auth.js"
 import fetchWish from "../middlewares/fetchWish.js"
 import uploadToImgur from "../middlewares/uploadToImgur.js"
+import formatWish from "../utils/formatWish.js"
 
 const upload = multer()
 
@@ -28,7 +29,7 @@ const wishRoutes = (app) => {
           },
         })
 
-        res.send({ result: wish })
+        res.send({ result: formatWish(wish, req) })
       } catch (error) {
         console.log(error)
 
@@ -62,7 +63,7 @@ const wishRoutes = (app) => {
           },
         })
 
-        res.send({ result: updatedWish })
+        res.send({ result: formatWish(updatedWish, req) })
       } catch (error) {
         console.error(error)
 
@@ -81,7 +82,7 @@ const wishRoutes = (app) => {
         },
       })
 
-      res.send({ result: wish })
+      res.send({ result: formatWish(wish, req) })
     } catch (error) {
       console.error(error)
 
@@ -92,7 +93,9 @@ const wishRoutes = (app) => {
   app.get("/wish/:wishId", auth, fetchWish, async (req, res) => {
     const { wish } = req
 
-    res.send({ result: wish })
+    res.send({
+      result: formatWish(wish, req),
+    })
   })
 
   app.get("/wish", auth, async (req, res) => {
@@ -108,7 +111,11 @@ const wishRoutes = (app) => {
         },
       })
 
-      res.send({ result: wishes })
+      const wishesFormatted = wishes.map((wish) => {
+        return formatWish(wish, req)
+      })
+
+      res.send({ result: wishesFormatted })
     } catch (error) {
       console.error(error)
 
