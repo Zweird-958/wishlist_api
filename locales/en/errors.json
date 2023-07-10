@@ -1,0 +1,7 @@
+{
+  "500": "Something went wrong.",
+  "notFound": "Not found.",
+  "notAuthorized": "You are not authorized to access this resource.",
+  "forbidden": "Forbidden",
+  "invalidCredentials": "Invalid credentials."
+}

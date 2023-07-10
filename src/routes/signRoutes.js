@@ -26,7 +26,8 @@ const signRoutes = (app) => {
       res.send({ result: user })
     } catch (err) {
       console.error(err)
-      res.send({ error: "Something wrong." })
+
+      res.status(500).send({ error: req.t("500") })
     }
   })
   app.post("/sign-in", async (req, res) => {
@@ -40,7 +41,7 @@ const signRoutes = (app) => {
     })
 
     if (!user || user.passwordHash !== passwordHash) {
-      res.status(401).send({ error: "Invalid credentials" })
+      res.status(401).send({ error: req.t("invalidCredentials") })
 
       return
     }

@@ -1,12 +1,12 @@
-import config from "../config.js"
 import jsonwebtoken from "jsonwebtoken"
 import { prisma } from "../../app.js"
+import config from "../config.js"
 
 const auth = async (req, res, next) => {
   const { authorization } = req.headers
 
   if (!authorization) {
-    res.status(403).send({ error: "Forbidden" })
+    res.status(403).send({ error: req.t("forbidden") })
 
     return
   }
@@ -24,7 +24,7 @@ const auth = async (req, res, next) => {
     })
 
     if (!user) {
-      res.status(403).send({ error: "Forbidden" })
+      res.status(403).send({ error: req.t("forbidden") })
 
       return
     }
@@ -34,14 +34,14 @@ const auth = async (req, res, next) => {
     await next()
   } catch (err) {
     if (err instanceof jsonwebtoken.JsonWebTokenError) {
-      res.status(403).send({ error: "Forbidden" })
+      res.status(403).send({ error: req.t("forbidden") })
 
       return
     }
 
     console.error(err)
 
-    res.status(500).send({ error: "Oops. Something wrong." })
+    res.status(500).send({ error: req.t("500") })
   }
 }
 

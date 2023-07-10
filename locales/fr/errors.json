@@ -1,0 +1,7 @@
+{
+  "500": "Il y a eu une erreur interne",
+  "notFound": "La ressource demandée n'existe pas",
+  "notAuthorized": "Vous n'êtes pas autorisé à accéder à cette ressource",
+  "forbidden": "Vous n'êtes pas autorisé à accéder à cette ressource",
+  "invalidCredentials": "Les identifiants fournis sont invalides"
+}

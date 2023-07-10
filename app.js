@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client"
 import cors from "cors"
 import express from "express"
+import i18next from "i18next"
+import Backend from "i18next-fs-backend"
+import middleware from "i18next-http-middleware"
 import config from "./src/config.js"
 import currencyRoutes from "./src/routes/currencyRoutes.js"
 import signRoutes from "./src/routes/signRoutes.js"
 import wishRoutes from "./src/routes/wishRoutes.js"
-import i18next from "i18next"
-import Backend from "i18next-fs-backend"
-import middleware from "i18next-http-middleware"
 
 i18next
   .use(Backend)
@@ -17,7 +17,7 @@ i18next
     fallbackLng: "en",
     supportedLngs: ["en", "fr"], // Langues prises en charge
     backend: {
-      loadPath: "locales/{{lng}}/{{ns}}.json",
+      loadPath: "locales/{{lng}}/errors.json",
     },
   })
 
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     util: {
       handleNotFound: (x) => {
         if (!x) {
-          res.status(404).send({ error: "Not found" })
+          res.status(404).send({ error: req.t("notFound") })
 
           return true
         }
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 
       notAuthorized: (wish, user) => {
         if (wish.userId !== user.id) {
-          res.status(401).send({ error: "Not authorized" })
+          res.status(401).send({ error: req.t("notAuthorized") })
 
           return true
         }
@@ -65,8 +65,8 @@ signRoutes(app)
 wishRoutes(app)
 currencyRoutes(app)
 
-app.use(function (_, res) {
-  res.status(404).send({ error: "Not found" })
+app.use(function (req, res) {
+  res.status(404).send({ error: req.t("notFound") })
 })
 
 app.listen(config.port, () => console.log(`Listening on : ${config.port}`))

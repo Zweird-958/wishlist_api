@@ -19,7 +19,7 @@ const fetchWish = async (req, res, next) => {
 
     next()
   } catch (error) {
-    res.status(500).send({ error: "Something wrong." })
+    res.status(500).send({ error: req.t("500") })
 
     return
   }

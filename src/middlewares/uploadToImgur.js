@@ -1,5 +1,5 @@
-import config from "../config.js"
 import fetch, { Headers } from "node-fetch"
+import config from "../config.js"
 
 const uploadToImgur = async (req, res, next) => {
   const image = req.file
@@ -33,7 +33,7 @@ const uploadToImgur = async (req, res, next) => {
     next()
   } catch (error) {
     console.log("error", error)
-    res.status(500).send({ error: "Something wrong." })
+    res.status(500).send({ error: req.t("500") })
   }
 }
 

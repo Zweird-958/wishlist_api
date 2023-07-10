@@ -33,7 +33,7 @@ const wishRoutes = (app) => {
       } catch (error) {
         console.log(error)
 
-        res.status(500).send({ error: "Something wrong." })
+        res.status(500).send({ error: req.t("500") })
       }
     }
   )
@@ -68,7 +68,7 @@ const wishRoutes = (app) => {
       } catch (error) {
         console.error(error)
 
-        res.status(500).send({ error: "Something wrong." })
+        res.status(500).send({ error: req.t("500") })
       }
     }
   )
@@ -87,7 +87,7 @@ const wishRoutes = (app) => {
     } catch (error) {
       console.error(error)
 
-      res.status(500).send({ error: "Something wrong." })
+      res.status(500).send({ error: req.t("500") })
     }
   })
 
@@ -120,7 +120,7 @@ const wishRoutes = (app) => {
     } catch (error) {
       console.error(error)
 
-      res.status(500).send({ error: "Something wrong." })
+      res.status(500).send({ error: req.t("500") })
     }
   })
 }
