@@ -10,6 +10,9 @@
     "sync-reset": "prisma db push --force-reset && prisma generate",
     "generate": "prisma generate"
   },
+  "engines": {
+    "node": ">=16.13.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
