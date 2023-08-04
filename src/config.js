@@ -10,7 +10,7 @@ const config = {
       digest: "sha512",
     },
     jwt: {
-      expiresIn: "2 days",
+      expiresIn: "60 days",
       secret: process.env.SECURITY_JWT_SECRET,
     },
   },
