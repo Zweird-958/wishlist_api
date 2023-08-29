@@ -25,10 +25,12 @@ const prisma = new PrismaClient()
 
 const app = express()
 
+app.use(express.static("public"))
+
 app.use(
   middleware.handle(i18next, {
     removeLngFromUrl: false,
-  })
+  }),
 )
 
 app.use(cors())
