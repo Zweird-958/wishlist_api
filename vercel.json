@@ -3,7 +3,7 @@
   "rewrites": [{ "source": "/src/(.*)", "destination": "/" }],
   "builds": [
     {
-      "src": "index.js",
+      "src": "app.js",
       "use": "@now/node"
     }
   ],
