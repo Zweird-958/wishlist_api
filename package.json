@@ -8,7 +8,8 @@
     "start": "node app.js",
     "sync": "prisma db push && prisma generate",
     "sync-reset": "prisma db push --force-reset && prisma generate",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "build": "npm i && npm run generate"
   },
   "engines": {
     "node": ">=16.13.0"
