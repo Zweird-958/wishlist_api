@@ -9,6 +9,7 @@
     "sync": "prisma db push && prisma generate",
     "sync-reset": "prisma db push --force-reset && prisma generate",
     "generate": "prisma generate",
+    "postinstall": "prisma generate",
     "build": "prisma generate && npm run start"
   },
   "author": "",
