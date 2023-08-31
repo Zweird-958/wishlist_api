@@ -11,7 +11,6 @@ const signUpSchema = yup.object().shape({
 
 const signRoutes = (app) => {
   app.post("/sign-up", async (req, res) => {
-    console.log(req.language)
     const { email, password } = req.body
 
     try {
