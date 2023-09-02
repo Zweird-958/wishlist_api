@@ -8,6 +8,7 @@ import config from "./src/config.js"
 import currencyRoutes from "./src/routes/currencyRoutes.js"
 import signRoutes from "./src/routes/signRoutes.js"
 import wishRoutes from "./src/routes/wishRoutes.js"
+import userRoutes from "./src/routes/userRoutes.js"
 
 i18next
   .use(Backend)
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 signRoutes(app)
 wishRoutes(app)
 currencyRoutes(app)
+userRoutes(app)
 
 app.use(function (req, res) {
   res.status(404).send({ error: req.t("notFound") })

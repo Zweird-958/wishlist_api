@@ -15,6 +15,10 @@ const config = {
     },
   },
   client_id: process.env.IMGUR_CLIENT_ID,
+  email: {
+    user: process.env.EMAIL_USER,
+    key: process.env.EMAIL_KEY,
+  },
 }
 
 export default config
