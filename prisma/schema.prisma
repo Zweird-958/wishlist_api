@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-    id           Int    @id @default(autoincrement())
-    email        String @unique
-    username     String @unique
-    passwordHash String
-    wishlist     Wish[]
+    id             Int    @id @default(autoincrement())
+    email          String @unique
+    username       String @unique
+    passwordHash   String
+    wishlist       Wish[]
+    wishlistShared Int[]
 }
 
 model Wish {

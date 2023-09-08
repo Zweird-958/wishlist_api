@@ -1,4 +1,4 @@
-const emailTemplate = () => {
+const emailTemplate = (content) => {
   return `
   <!doctype html>
 <html>
@@ -9,6 +9,7 @@ const emailTemplate = () => {
   </head>
   <body>
     <h1>My Wishlist</h1>
+    <p>${content}</p>
   </body>
 </html>`
 }

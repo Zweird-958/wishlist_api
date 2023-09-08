@@ -18,8 +18,10 @@ i18next
     fallbackLng: "en",
     supportedLngs: ["en", "fr"], // Langues prises en charge
     backend: {
-      loadPath: "locales/{{lng}}/errors.json",
+      loadPath: "locales/{{lng}}/{{ns}}.json",
     },
+    ns: ["errors", "common"],
+    defaultNS: "errors",
   })
 
 const prisma = new PrismaClient()

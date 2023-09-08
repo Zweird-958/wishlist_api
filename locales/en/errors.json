@@ -3,5 +3,7 @@
   "notFound": "Not found.",
   "notAuthorized": "You are not authorized to access this resource.",
   "forbidden": "Forbidden",
-  "invalidCredentials": "Invalid credentials."
+  "invalidCredentials": "Invalid credentials.",
+  "addHimSelf": "You can't add yourself.",
+  "alreadyShared": "Wishlist already shared!"
 }

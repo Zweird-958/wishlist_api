@@ -11,12 +11,12 @@ const transporter = createTransport({
   },
 })
 
-const sendMail = async (subject, receiver, callback) => {
+const sendMail = async (subject, receiver, content, callback) => {
   const mailOptions = {
     from: `My Wishlist <${config.email.user}>`,
     to: receiver,
     subject: subject,
-    text: emailTemplate(),
+    text: emailTemplate(content),
   }
 
   transporter.sendMail(mailOptions, function (error) {
