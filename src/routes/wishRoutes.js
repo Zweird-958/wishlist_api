@@ -192,7 +192,11 @@ const wishRoutes = (app) => {
         },
       })
 
-      res.send({ result: wishlist })
+      res.send({
+        result: wishlist.map((wish) => {
+          return formatWish(wish, req)
+        }),
+      })
     } catch (error) {
       console.error(error)
 
