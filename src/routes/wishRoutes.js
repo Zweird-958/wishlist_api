@@ -5,6 +5,7 @@ import fetchWish from "../middlewares/fetchWish.js"
 import uploadToImgur from "../middlewares/uploadToImgur.js"
 import formatWish from "../utils/formatWish.js"
 import sendMail from "../utils/sendMail.js"
+import getWishlistShared from "../middlewares/getWishlistShared.js"
 
 const upload = multer()
 
@@ -176,12 +177,12 @@ const wishRoutes = (app) => {
     }
   })
 
-  app.get("/share/wish/:userId", auth, async (req, res) => {
-    const { user, params } = req
+  app.get("/share/wish/:userId", auth, getWishlistShared, async (req, res) => {
+    const { params, wishlistShared } = req
     const { userId } = params
 
     try {
-      if (!user.wishlistShared.some(({ id }) => id === Number(userId))) {
+      if (!wishlistShared.some(({ id }) => id === Number(userId))) {
         res.status(401).send({ error: req.t("notAuthorized") })
 
         return
@@ -205,12 +206,12 @@ const wishRoutes = (app) => {
     }
   })
 
-  app.get("/share/wish", auth, async (req, res) => {
-    const { user } = req
+  app.get("/share/wish", auth, getWishlistShared, async (req, res) => {
+    const { wishlistShared } = req
 
     try {
       res.send({
-        result: user.wishlistShared.map(({ username, id }) => {
+        result: wishlistShared.map(({ username, id }) => {
           return {
             id,
             username,

@@ -21,9 +21,6 @@ const auth = async (req, res, next) => {
       where: {
         id: payload.userId,
       },
-      include: {
-        wishlistShared: true,
-      },
     })
 
     if (!user) {
