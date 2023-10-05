@@ -143,6 +143,7 @@ const wishRoutes = (app) => {
             mode: "insensitive",
           },
         },
+        include: { wishlistShared: true },
       })
 
       if (wishlistShared.includes(user.id)) {
@@ -157,7 +158,7 @@ const wishRoutes = (app) => {
         },
         data: {
           wishlistShared: {
-            push: user.id,
+            connect: user,
           },
         },
       })
@@ -180,7 +181,7 @@ const wishRoutes = (app) => {
     const { userId } = params
 
     try {
-      if (!user.wishlistShared.includes(Number(userId))) {
+      if (!user.wishlistShared.some(({ id }) => id === Number(userId))) {
         res.status(401).send({ error: req.t("notAuthorized") })
 
         return
@@ -208,16 +209,8 @@ const wishRoutes = (app) => {
     const { user } = req
 
     try {
-      const users = await prisma.user.findMany({
-        where: {
-          id: {
-            in: user.wishlistShared,
-          },
-        },
-      })
-
       res.send({
-        result: users.map(({ username, id }) => {
+        result: user.wishlistShared.map(({ username, id }) => {
           return {
             id,
             username,

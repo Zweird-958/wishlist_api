@@ -14,12 +14,15 @@ const auth = async (req, res, next) => {
   try {
     const { payload } = jsonwebtoken.verify(
       authorization,
-      config.security.jwt.secret
+      config.security.jwt.secret,
     )
 
     const user = await prisma.user.findUnique({
       where: {
         id: payload.userId,
+      },
+      include: {
+        wishlistShared: true,
       },
     })
 
