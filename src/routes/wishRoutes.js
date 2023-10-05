@@ -6,6 +6,7 @@ import uploadToImgur from "../middlewares/uploadToImgur.js"
 import formatWish from "../utils/formatWish.js"
 import sendMail from "../utils/sendMail.js"
 import getWishlistShared from "../middlewares/getWishlistShared.js"
+import getSharedWith from "../middlewares/getSharedWith.js"
 
 const upload = multer()
 
@@ -153,6 +154,7 @@ const wishRoutes = (app) => {
         return
       }
 
+      // Add user to wishlistShared
       await prisma.user.update({
         where: {
           email,
@@ -160,6 +162,20 @@ const wishRoutes = (app) => {
         data: {
           wishlistShared: {
             connect: user,
+          },
+        },
+      })
+
+      // Add userShared to sharedWith
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          sharedWith: {
+            connect: {
+              email,
+            },
           },
         },
       })
@@ -212,6 +228,25 @@ const wishRoutes = (app) => {
     try {
       res.send({
         result: wishlistShared.map(({ username, id }) => {
+          return {
+            id,
+            username,
+          }
+        }),
+      })
+    } catch (error) {
+      console.error(error)
+
+      res.status(500).send({ error: req.t("500") })
+    }
+  })
+
+  app.get("/share/users", auth, getSharedWith, async (req, res) => {
+    const { sharedWith } = req
+
+    try {
+      res.send({
+        result: sharedWith.map(({ username, id }) => {
           return {
             id,
             username,

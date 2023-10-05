@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-    id                     Int    @id @default(autoincrement())
-    email                  String @unique
-    username               String @unique
-    passwordHash           String
-    wishlist               Wish[]
-    wishlistShared         User[] @relation("WishlistShared")
-    wishlistSharedRelation User[] @relation("WishlistShared")
+    id             Int    @id @default(autoincrement())
+    email          String @unique
+    username       String @unique
+    passwordHash   String
+    wishlist       Wish[]
+    wishlistShared User[] @relation("WishlistShared")
+    sharedWith     User[] @relation("WishlistShared")
 }
 
 model Wish {
