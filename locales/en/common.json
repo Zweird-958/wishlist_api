@@ -1,5 +1,6 @@
 {
   "wishlistShared": "Wishlist shared successfully!",
   "wishlistSharedMail": "Wishlist Shared",
-  "wishlistSharedMailContent": "{{user}} shared a wishlist with you."
+  "wishlistSharedMailContent": "{{user}} shared a wishlist with you.",
+  "wishlistUnshared": "Wishlist unshared successfully!"
 }

@@ -5,5 +5,6 @@
   "forbidden": "Vous n'êtes pas autorisé à accéder à cette ressource",
   "invalidCredentials": "Les identifiants fournis sont invalides",
   "addHimSelf": "Vous ne pouvez pas vous ajouter vous-même",
-  "alreadyShared": "Vous avez déjà partagé votre liste d'envie avec cette personne"
+  "alreadyShared": "Vous avez déjà partagé votre liste d'envie avec cette personne",
+  "cannonUnshare": "Vous ne pouvez pas retirer le partage de votre liste d'envie avec cette personne"
 }

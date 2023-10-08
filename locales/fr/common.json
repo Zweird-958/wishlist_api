@@ -1,5 +1,6 @@
 {
   "wishlistShared": "Liste de souhaits partagée !",
   "wishlistSharedMail": "Liste d'envie partagée",
-  "wishlistSharedMailContent": "{{user}} à partagé sa liste d'envie avec vous."
+  "wishlistSharedMailContent": "{{user}} à partagé sa liste d'envie avec vous.",
+  "wishlistUnshared": "{{user}} n'a plus accès à votre liste de souhaits !"
 }

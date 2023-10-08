@@ -244,6 +244,75 @@ const wishRoutes = (app) => {
     }
   })
 
+  app.delete("/share/wish/:userId", auth, getSharedWith, async (req, res) => {
+    const { user, params, sharedWith } = req
+    const { userId } = params
+
+    const formattedUserId = Number(userId)
+
+    if (user.id === formattedUserId) {
+      res.status(400).send({ error: req.t("cannotUnshare") })
+
+      return
+    }
+
+    if (!sharedWith.some(({ id }) => id === formattedUserId)) {
+      res.status(401).send({ error: req.t("notAuthorized") })
+
+      return
+    }
+
+    try {
+      const userToUnshare = await prisma.user.findFirst({
+        where: {
+          id: formattedUserId,
+        },
+      })
+
+      if (!userToUnshare) {
+        res.status(500).send({ error: req.t("500") })
+
+        return
+      }
+
+      // Remove userShared from sharedWith
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          sharedWith: {
+            disconnect: {
+              id: formattedUserId,
+            },
+          },
+        },
+      })
+
+      // Remove user from wishlistShared
+      await prisma.user.update({
+        where: {
+          id: Number(userId),
+        },
+        data: {
+          wishlistShared: {
+            disconnect: {
+              id: user.id,
+            },
+          },
+        },
+      })
+
+      res.send({
+        result: req.t("common:wishlistUnshared", {
+          user: userToUnshare.username,
+        }),
+      })
+    } catch {
+      res.status(500).send({ error: req.t("500") })
+    }
+  })
+
   app.get("/share/users", auth, getSharedWith, async (req, res) => {
     const { sharedWith } = req
 
