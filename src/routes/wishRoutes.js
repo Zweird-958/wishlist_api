@@ -148,7 +148,7 @@ const wishRoutes = (app) => {
         include: { wishlistShared: true },
       })
 
-      if (wishlistShared.includes(user.id)) {
+      if (wishlistShared.some(({ id }) => id === user.id)) {
         res.status(400).send({ error: req.t("alreadyShared") })
 
         return
