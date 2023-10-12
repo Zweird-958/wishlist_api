@@ -2,11 +2,12 @@ import multer from "multer"
 import { prisma } from "../../app.js"
 import auth from "../middlewares/auth.js"
 import fetchWish from "../middlewares/fetchWish.js"
+import getSharedWith from "../middlewares/getSharedWith.js"
+import getWishlistShared from "../middlewares/getWishlistShared.js"
 import uploadToImgur from "../middlewares/uploadToImgur.js"
 import formatWish from "../utils/formatWish.js"
 import sendMail from "../utils/sendMail.js"
-import getWishlistShared from "../middlewares/getWishlistShared.js"
-import getSharedWith from "../middlewares/getSharedWith.js"
+import formatUser from "../utils/formatUser.js"
 
 const upload = multer()
 
@@ -138,7 +139,7 @@ const wishRoutes = (app) => {
     }
 
     try {
-      const { wishlistShared, email } = await prisma.user.findFirst({
+      const userWithAccess = await prisma.user.findFirst({
         where: {
           username: {
             equals: username,
@@ -147,6 +148,8 @@ const wishRoutes = (app) => {
         },
         include: { wishlistShared: true },
       })
+
+      const { wishlistShared, email } = userWithAccess
 
       if (wishlistShared.some(({ id }) => id === user.id)) {
         res.status(400).send({ error: req.t("alreadyShared") })
@@ -185,7 +188,12 @@ const wishRoutes = (app) => {
         email,
         req.t("common:wishlistSharedMailContent", { user: user.username }),
       )
-      res.send({ result: req.t("common:wishlistShared") })
+      res.send({
+        result: {
+          message: req.t("common:wishlistShared"),
+          user: formatUser(userWithAccess),
+        },
+      })
     } catch (error) {
       console.error(error)
 
@@ -304,9 +312,12 @@ const wishRoutes = (app) => {
       })
 
       res.send({
-        result: req.t("common:wishlistUnshared", {
-          user: userToUnshare.username,
-        }),
+        result: {
+          message: req.t("common:wishlistUnshared", {
+            user: userToUnshare.username,
+          }),
+          user: formatUser(userToUnshare),
+        },
       })
     } catch {
       res.status(500).send({ error: req.t("500") })
@@ -318,12 +329,7 @@ const wishRoutes = (app) => {
 
     try {
       res.send({
-        result: sharedWith.map(({ username, id }) => {
-          return {
-            id,
-            username,
-          }
-        }),
+        result: sharedWith.map((user) => formatUser(user)),
       })
     } catch (error) {
       console.error(error)
