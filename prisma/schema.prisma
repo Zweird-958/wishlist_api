@@ -28,6 +28,7 @@ model Wish {
     userId    Int
     purchased Boolean  @default(value: false)
     createdAt DateTime @default(now())
+    isPrivate Boolean  @default(value: false)
 }
 
 enum Currency {

@@ -222,9 +222,11 @@ const wishRoutes = (app) => {
       })
 
       res.send({
-        result: wishlist.map((wish) => {
-          return formatWish(wish, req)
-        }),
+        result: wishlist
+          .filter((wish) => !wish.isPrivate)
+          .map((wish) => {
+            return formatWish(wish, req)
+          }),
       })
     } catch (error) {
       console.error(error)
