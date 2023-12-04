@@ -19,7 +19,7 @@ const wishRoutes = (app) => {
     uploadToImgur,
     async (req, res) => {
       const { user, body, image } = req
-      const { name, price, currency, link } = body
+      const { name, price, currency, link, isPrivate } = body
 
       try {
         const wish = await prisma.wish.create({
@@ -30,6 +30,7 @@ const wishRoutes = (app) => {
             link,
             currency,
             userId: user.id,
+            isPrivate: isPrivate === "true",
           },
         })
 
@@ -50,7 +51,7 @@ const wishRoutes = (app) => {
     uploadToImgur,
     async (req, res) => {
       const { wish, body, image } = req
-      const { name, price, currency, link, purchased } = body
+      const { name, price, currency, link, purchased, isPrivate } = body
 
       try {
         const updatedWish = await prisma.wish.update({
@@ -62,9 +63,17 @@ const wishRoutes = (app) => {
             price: Number(price) || wish.price,
             currency: currency || wish.currency,
             link: link || wish.link,
-            purchased:
-              typeof purchased === "boolean" ? purchased : purchased === "true",
+            purchased: purchased
+              ? typeof purchased === "boolean"
+                ? purchased
+                : purchased === "true"
+              : wish.purchased,
             image: image || wish.image,
+            isPrivate: isPrivate
+              ? typeof isPrivate === "boolean"
+                ? isPrivate
+                : isPrivate === "true"
+              : wish.isPrivate,
           },
         })
 
