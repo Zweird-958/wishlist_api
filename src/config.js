@@ -14,10 +14,16 @@ const config = {
       secret: process.env.SECURITY_JWT_SECRET,
     },
   },
-  client_id: process.env.IMGUR_CLIENT_ID,
   email: {
     user: process.env.EMAIL_USER,
     key: process.env.EMAIL_KEY,
+  },
+  image: {
+    bucket: process.env.S3_BUCKET_NAME,
+    accessKey: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    accountId: process.env.ACCOUNT_ID,
+    bucketUrl: process.env.BUCKET_URL,
   },
 }
 
