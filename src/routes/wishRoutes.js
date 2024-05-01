@@ -236,6 +236,10 @@ const wishRoutes = (app) => {
           .map((wish) => {
             return formatWish(wish, req)
           }),
+        meta: {
+          username: wishlistShared.find(({ id }) => id === Number(userId))
+            .username,
+        },
       })
     } catch (error) {
       console.error(error)
